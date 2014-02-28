@@ -54,21 +54,6 @@ class PDF extends FPDF{
 		$pdf->Ln();
 	}
 
-	$pdf->Ln();
-	//number of books not borrowed
-	$pdf->Cell(30,6,'Number of Books not Borrowed');
-	$pdf->Ln();
-
-	foreach($not_borrowed_header as $col){
-		$pdf->Cell(60,7,$col,1,0,'C');
-	}
-	$pdf->Ln();
-
-	foreach($books_not_borrowed->result() as $row){
-		foreach($row as $col)
-			$pdf->Cell(60,6,$col,1,0,'C');
-		$pdf->Ln();
-	}
 
 	//most borrowed book/s
 	$pdf->SetFont('Arial','',10);

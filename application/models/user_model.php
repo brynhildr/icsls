@@ -533,7 +533,7 @@ class User_model extends CI_Model{
 		if (strcmp($type,'daily')==0) {
 			$book_list = $this->db->query("SELECT reference_material_id, borrower_id, date_waitlisted, date_reserved, date_borrowed, date_returned from transactions where date_borrowed like CURDATE()");
 			$books_borrowed = $this->db->query("SELECT COUNT(DISTINCT reference_material_id) from transactions where date_borrowed like CURDATE()");
-			$books_not_borrowed = $this->db->query("SELECT COUNT(DISTINCT reference_material_id) from transactions where date_borrowed NOT LIKE CURDATE()");
+			//$books_not_borrowed = $this->db->query("SELECT COUNT(DISTINCT reference_material_id) from transactions where date_borrowed NOT LIKE CURDATE()");
 /*			$most_borrowed = $this->db->query("SELECT reference_material_id, MAX(COUNT(date_borrowed)) from transactions where date_borrowed like CURDATE() group by date_borrowed");
 			$least_borrowed = $this->db->query("SELECT reference_material_id, MIN(COUNT(date_borrowed)) from transactions where date_borrowed like CURDATE() gro up by date_borrowed");
 */		} 
@@ -543,7 +543,7 @@ class User_model extends CI_Model{
 		else if (strcmp($type,'weekly')==0 && $day=='Fri') {
 			$book_list = $this->db->query("SELECT reference_material_id, borrower_id, date_waitlisted, date_reserved, date_borrowed, date_returned from transactions where DATE_SUB(CURDATE(), INTERVAL 4 DAY)<=date_borrowed");	
 			$books_borrowed = $this->db->query("SELECT COUNT(DISTINCT reference_material_id) from transactions where DATE_SUB(CURDATE(), INTERVAL 4 DAY)<=date_borrowed");
-			$books_not_borrowed = $this->db->query("SELECT COUNT(DISTINCT reference_material_id) from transactions where DATE_SUB(CURDATE(), INTERVAL 4 DAY)<=date_borrowed")->result();
+			//$books_not_borrowed = $this->db->query("SELECT COUNT(DISTINCT reference_material_id) from transactions where DATE_SUB(CURDATE(), INTERVAL 4 DAY)<=date_borrowed")->result();
 			
 /*			$most_borrowed = $this->db->query("SELECT reference_material_id, MAX(COUNT(date_borrowed)) from transactions where DATE_SUB(CURDATE(), INTERVAL 4 DAY)<=date_borrowed");
 			$least_borrowed = $this->db->query("SELECT reference_material_id, MIN(COUNT(date_borrowed)) from transactions where DATE_SUB(CURDATE(), INTERVAL 4 DAY)<=date_borrowed");
@@ -553,16 +553,16 @@ class User_model extends CI_Model{
 			$book_list = $this->db->query("SELECT reference_material_id, borrower_id, date_waitlisted, date_reserved, date_borrowed, date_returned from transactions where MONTHNAME(date_borrowed) like MONTHNAME(CURDATE())");
 			$books_borrowed = $this->db->query("SELECT COUNT(DISTINCT reference_material_id) from transactions where MONTHNAME(date_borrowed) like MONTHNAME(CURDATE())");
 			
-			$books_not_borrowed = $this->db->query("SELECT COUNT(DISTINCT reference_material_id) from transactions where MONTHNAME(date_borrowed) like MONTHNAME(CURDATE())");
+			//$books_not_borrowed = $this->db->query("SELECT COUNT(DISTINCT reference_material_id) from transactions where MONTHNAME(date_borrowed) like MONTHNAME(CURDATE())");
 /*			$most_borrowed = $this->db->query("SELECT reference_material_id, MAX(COUNT(date_borrowed)) from transactions where MONTHNAME(date_borrowed) like MONTHNAME(CURDATE())");
 			$least_borrowed = $this->db->query("SELECT reference_material_id, MIN(COUNT(date_borrowed)) from transactions where MONTHNAME(date_borrowed) like MONTHNAME(CURDATE())");
 */		}
 		$most_borrowed = $this->db->query("select * from reference_materials where times_borrowed = (select max(times_borrowed) from reference_material) ")->result();
 		
-		if( $book_list!=NULL || $books_borrowed!=NULL || $books_not_borrowed!=NULL || $most_borrowed!=NULL){
+		if( $book_list!=NULL || $books_borrowed!=NULL ||  $most_borrowed!=NULL){
 		return $data = array('book_list' => $book_list,
 							 'books_borrowed' => $books_borrowed,
-							 'books_not_borrowed' => $books_not_borrowed,
+							 //'books_not_borrowed' => $books_not_borrowed,
 							 'most_borrowed' => $most_borrowed);//,
 							 //'least_borrowed' => $least_borrowed);
 		}
